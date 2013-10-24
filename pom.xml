@@ -1,0 +1,19 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<groupId>eu.kratochvil.perfmon</groupId>
+	<artifactId>perfmon-reactor</artifactId>
+	<version>0.1-SNAPSHOT</version>
+	<packaging>pom</packaging>
+
+	<name>PerfMon - reactor</name>
+	<description>Performance monitor for Java - reactor</description>
+	<url>http://jiri.kratochvil.eu</url>
+	<inceptionYear>2013</inceptionYear>
+
+	<modules>
+		<module>perfmon-core</module>
+		<module>perfmon-parent</module>
+	</modules>
+</project>
