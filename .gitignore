@@ -1,5 +1,11 @@
-.idea
+/.idea
 target
 
+/*.iml
+/perfmon-reactor.iml
 
-*.iml
+.idea
+
+/.idea/*
+
+.idea/
