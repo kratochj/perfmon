@@ -15,7 +15,11 @@ public class MonitorFactoryImpl implements MonitorFactory {
 		MonitorId monitorId = new MonitorId(monitorName, monitorCategory);
 		Monitor instance = monitorMap.get(monitorId);
 		if (instance == null) {
-			instance = new MonitorImpl();
+			if (MonitorCategory.ASYNC.equals(monitorCategory)) {
+			 	instance = new AsyncMonitorImpl(monitorId.getName(), monitorId.getCategory());
+			} else {
+				instance = new MonitorImpl(monitorId.getName(), monitorId.getCategory());
+			}
 			monitorMap.put(monitorId, instance);
 		}
 		return instance;

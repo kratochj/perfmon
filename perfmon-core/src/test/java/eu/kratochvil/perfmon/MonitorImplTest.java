@@ -12,7 +12,7 @@ public class MonitorImplTest {
 
 	@Test
 	public void testSimple() throws Exception {
-		MonitorImpl monitor = new MonitorImpl();
+		MonitorImpl monitor = new MonitorImpl("Test", MonitorCategory.STOP_WATCH);
 		StopWatch watch = monitor.getStopWatch();
 		watch.start();
 		Thread.sleep(10);

@@ -5,6 +5,8 @@ package eu.kratochvil.perfmon;
  */
 public interface Monitor {
 
+	StopWatch getStopWatch(String key);
+
 	StopWatch getStopWatch();
 
 	void save(StopWatch stopWatch);

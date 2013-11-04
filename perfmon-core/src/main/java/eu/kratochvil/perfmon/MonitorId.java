@@ -1,7 +1,5 @@
 package eu.kratochvil.perfmon;
 
-import java.util.UUID;
-
 import org.apache.commons.lang.builder.ToStringBuilder;
 
 /**
@@ -13,13 +11,9 @@ public class MonitorId {
 
 	MonitorCategory category;
 
-	String key;
-
-
 	public MonitorId(String name, MonitorCategory category) {
 		this.name = name;
 		this.category = category;
-		this.key = UUID.randomUUID().toString();
 	}
 
 	public String getName() {
@@ -30,14 +24,10 @@ public class MonitorId {
 		return category;
 	}
 
-	public String getKey() {
-		return key;
-	}
-
 	@Override
 	public String toString() {
 		ToStringBuilder builder = new ToStringBuilder(this);
-		builder.append("name", name).append("category", category).append("key", key);
+		builder.append("monitorName", name).append("category", category);
 		return builder.toString();
 	}
 
@@ -52,15 +42,17 @@ public class MonitorId {
 
 		MonitorId monitorId = (MonitorId) o;
 
-		if (!key.equals(monitorId.key)) {
+		if (!name.equals(monitorId.name)) {
 			return false;
 		}
-
 		return true;
 	}
 
 	@Override
 	public int hashCode() {
-		return key.hashCode();
+		int hash = 1;
+		hash = hash * 17 + name.hashCode();
+		hash = hash * 31 + category.hashCode();
+		return hash;
 	}
 }

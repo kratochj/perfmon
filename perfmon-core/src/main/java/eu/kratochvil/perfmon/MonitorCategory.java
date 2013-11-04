@@ -5,6 +5,6 @@ package eu.kratochvil.perfmon;
  */
 public enum MonitorCategory {
 
-	STOP_WATCH, STATS
+	STOP_WATCH, STATS, ASYNC
 
 }

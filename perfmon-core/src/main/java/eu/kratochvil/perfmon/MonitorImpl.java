@@ -1,6 +1,6 @@
 package eu.kratochvil.perfmon;
 
-import org.apache.commons.lang.NotImplementedException;
+import org.apache.commons.lang.builder.ToStringBuilder;
 
 /**
  * @author Jiri Kratochvil <jiri.kratochvil@topmonks.com>
@@ -15,12 +15,25 @@ public class MonitorImpl implements Monitor {
 
 	long shortestDuration = Long.MAX_VALUE;
 
+	String monitorName;
+
+	MonitorCategory monitorCategory;
+
 	String key = null;
+
+	public MonitorImpl(String monitorName, MonitorCategory monitorCategory) {
+		this.monitorName = monitorName;
+		this.monitorCategory = monitorCategory;
+	}
+
+	@Override
+	public StopWatch getStopWatch(String key) {
+		return new StopWatch();
+	}
 
 	@Override
 	public StopWatch getStopWatch() {
 		return new StopWatch();
-
 	}
 
 	@Override
@@ -41,11 +54,20 @@ public class MonitorImpl implements Monitor {
 
 	@Override
 	public MonitorStats getStatistics() {
-		throw new NotImplementedException();
+		return new MonitorStats(callsTotal, totalDuration, totalDuration / callsTotal, longestDuration, shortestDuration);
 	}
 
 	@Override
 	public String getKey() {
 		return key;
+	}
+
+	@Override
+	public String toString() {
+		ToStringBuilder builder = new ToStringBuilder(this);
+		builder.append("name", monitorName).append("category", monitorCategory).append("callsTotal", callsTotal)
+		       .append("totalDuration", totalDuration).append("longestDuration", longestDuration)
+		       .append("shortestDuration", shortestDuration).append("averageCall", totalDuration / callsTotal);
+		return builder.toString();
 	}
 }
