@@ -25,7 +25,7 @@ import static org.junit.Assert.*;
  * @author Jiri Kratochvil <jiri.kratochvil@topmonks.com>
  */
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations = {"/applicationContext.xml"})
+@ContextConfiguration(locations = {"/spring-perfmon-jmx-context.xml"})
 public class StatisticsJmxImplTest {
 	public static final Logger logger = LogManager.getLogger(StatisticsJmxImplTest.class);
 
