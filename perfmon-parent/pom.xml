@@ -12,7 +12,7 @@
 
     <properties>
 	    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <version.spring.core>3.0.5.RELEASE</version.spring.core>
+        <version.spring>3.0.5.RELEASE</version.spring>
     </properties>
 
     <developers>
@@ -51,6 +51,19 @@
                 <version>4.6</version>
             </dependency>
 
+	        <!--javax-->
+	        <dependency>
+		        <groupId>javax.inject</groupId>
+		        <artifactId>javax.inject</artifactId>
+		        <version>1</version>
+	        </dependency>
+	        <dependency>
+		        <groupId>org.jvnet.opendmk</groupId>
+		        <artifactId>jmxremote_optional</artifactId>
+		        <version>1.0_01-ea</version>
+	        </dependency>
+
+
 	        <!-- Apache commons -->
 	        <dependency>
 		        <groupId>commons-lang</groupId>
@@ -72,17 +85,24 @@
             <dependency>
                 <groupId>org.springframework</groupId>
                 <artifactId>spring-core</artifactId>
-                <version>${version.spring.core}</version>
+                <version>${version.spring}</version>
             </dependency>
-            <dependency>
+	        <dependency>
+		        <groupId>org.springframework</groupId>
+		        <artifactId>spring-context</artifactId>
+		        <version>${version.spring}</version>
+	        </dependency>
+
+	        <dependency>
                 <groupId>org.springframework</groupId>
                 <artifactId>spring-beans</artifactId>
-                <version>${version.spring.core}</version>
+                <version>${version.spring}</version>
             </dependency>
             <dependency>
                 <groupId>org.springframework</groupId>
                 <artifactId>spring-test</artifactId>
-                <version>${version.spring.core}</version>
+                <version>${version.spring}</version>
+	            <scope>test</scope>
             </dependency>
             <!-- Spring WS -->
             <dependency>
@@ -93,7 +113,7 @@
             <dependency>
                 <groupId>org.springframework</groupId>
                 <artifactId>spring-oxm</artifactId>
-                <version>${version.spring.core}</version>
+                <version>${version.spring}</version>
             </dependency>
 
 	        <dependency>

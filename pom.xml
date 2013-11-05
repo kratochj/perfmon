@@ -15,5 +15,6 @@
 	<modules>
 		<module>perfmon-core</module>
 		<module>perfmon-parent</module>
+		<module>perfmon-jmx</module>
 	</modules>
 </project>
