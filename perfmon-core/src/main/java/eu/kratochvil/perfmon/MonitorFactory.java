@@ -7,4 +7,6 @@ public interface MonitorFactory {
 
 	Monitor getInstance(String monitorName, MonitorCategory monitorCategory);
 
+	void reset();
+
 }
