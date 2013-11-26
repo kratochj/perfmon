@@ -15,4 +15,6 @@ public interface Monitor {
 
 	String getKey();
 
+	void reset();
+
 }

@@ -63,6 +63,14 @@ public class MonitorImpl implements Monitor {
 	}
 
 	@Override
+	public void reset() {
+		callsTotal = 0;
+		totalDuration = 0;
+		longestDuration = 0;
+		shortestDuration = Long.MAX_VALUE;
+	}
+
+	@Override
 	public String toString() {
 		ToStringBuilder builder = new ToStringBuilder(this);
 		builder.append("name", monitorName).append("category", monitorCategory).append("callsTotal", callsTotal)
