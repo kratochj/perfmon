@@ -44,10 +44,10 @@ public class StatisticsDao {
 			Statistics dbStatistics = loadMonitorStatistics(entry.getKey(), now);
 			if (dbStatistics != null) {
 				logger.debug("Updating monitor: {}", dbStatistics);
-				// TODO Update
+				updateMonitorStatistics(entry.getKey(), entry.getValue(), now);
 			} else {
 				logger.debug("Creating new db record for monitor: {}", entry.getKey());
-				// TODO Insert
+				createMonitorStatistics(entry.getKey(), entry.getValue(), now);
 			}
 		}
 
