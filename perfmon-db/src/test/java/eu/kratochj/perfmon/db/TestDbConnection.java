@@ -1,5 +1,6 @@
 package eu.kratochj.perfmon.db;
 
+import eu.kratochvil.perfmon.db.Statistics;
 import org.apache.commons.dbutils.QueryRunner;
 import org.apache.commons.dbutils.handlers.BeanHandler;
 import org.junit.Test;
@@ -24,6 +25,5 @@ public class TestDbConnection {
 	public void testSelectEmpty() throws Exception {
 		Statistics stats = query.query("select * from STATISTICS where rownum <= 1", new BeanHandler<Statistics>(Statistics.class));
 		assertNull(stats);
-
 	}
 }
