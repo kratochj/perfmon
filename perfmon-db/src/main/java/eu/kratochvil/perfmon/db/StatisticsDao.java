@@ -29,8 +29,6 @@ public class StatisticsDao {
 			"shorttest=?, longest=?, last_Updated=? " +
 			"where name=? and category=? and dt_Year=? and dt_Month=? and dt_Day=? and dt_Hour=?";
 
-
-
 	QueryRunner runner;
 
 	public void saveStatistics(MonitorFactory monitorFactory) throws SQLException {
