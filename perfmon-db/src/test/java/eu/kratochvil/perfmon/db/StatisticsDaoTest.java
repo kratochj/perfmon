@@ -5,6 +5,8 @@ import java.util.Date;
 
 import eu.kratochvil.perfmon.Monitor;
 import eu.kratochvil.perfmon.MonitorCategory;
+import eu.kratochvil.perfmon.MonitorFactory;
+import eu.kratochvil.perfmon.MonitorFactoryImpl;
 import eu.kratochvil.perfmon.MonitorId;
 import eu.kratochvil.perfmon.MonitorImpl;
 import eu.kratochvil.perfmon.MonitorStats;
@@ -147,5 +149,37 @@ public class StatisticsDaoTest {
 			assertEquals(23455, stats.getLongest());
 			assertEquals(3, stats.getShorttest());
 		}});
+	}
+
+	@Test
+	public void testSaveStatistics() throws Exception {
+		runner.update(INSERT_QUERY, "test", "ASYNC", 2008, 9, 4, 10, new Timestamp(new Date()
+				.getTime()), 5, 2342523, 23455, 3);
+
+		final Monitor monitor1 = new MonitorImpl("test1", MonitorCategory.ASYNC) {
+			@Override
+			public MonitorStats getStatistics() {
+				return new MonitorStats(5, 15, 3, 50, 10);
+			}
+		};
+		final Monitor monitor2 = new MonitorImpl("test2", MonitorCategory.ASYNC) {
+			@Override
+			public MonitorStats getStatistics() {
+				return new MonitorStats(5, 15, 3, 50, 10);
+			}
+		};
+
+
+		MonitorFactory monitorFactory = new MonitorFactoryImpl(){
+			@Override
+			public Monitor getInstance(String monitorName, MonitorCategory monitorCategory) {
+				  if ("test1".equals(monitorName)) {
+					  return monitor1;
+				  } else {
+					  return monitor2;
+				  }
+			}
+		};
+		statisticsDao.saveStatistics(monitorFactory);
 	}
 }
