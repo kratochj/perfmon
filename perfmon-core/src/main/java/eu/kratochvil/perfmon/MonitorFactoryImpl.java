@@ -30,6 +30,10 @@ public class MonitorFactoryImpl implements MonitorFactory {
 		return instance;
 	}
 
+	public Map<MonitorId, Monitor> getMonitorMap() {
+		return monitorMap;
+	}
+
 	@Override
 	public void reset() {
 		logger.info("Reseting statistics");
