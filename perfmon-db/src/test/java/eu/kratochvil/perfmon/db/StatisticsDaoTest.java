@@ -118,7 +118,7 @@ public class StatisticsDaoTest {
 			assertNotNull(stats);
 			logger.debug("Loaded: {}", stats);
 			assertEquals(10, stats.getTotalCalls());
-			assertEquals(2342523+15, stats.getTotalTime());
+			assertEquals(2342523 + 15, stats.getTotalTime());
 			assertEquals(500000, stats.getLongest());
 			assertEquals(1, stats.getShorttest());
 		}});
@@ -145,7 +145,7 @@ public class StatisticsDaoTest {
 			assertNotNull(stats);
 			logger.debug("Loaded: {}", stats);
 			assertEquals(10, stats.getTotalCalls());
-			assertEquals(2342523+15, stats.getTotalTime());
+			assertEquals(2342523 + 15, stats.getTotalTime());
 			assertEquals(23455, stats.getLongest());
 			assertEquals(3, stats.getShorttest());
 		}});
@@ -170,16 +170,28 @@ public class StatisticsDaoTest {
 		};
 
 
-		MonitorFactory monitorFactory = new MonitorFactoryImpl(){
+		final MonitorFactory monitorFactory = new MonitorFactoryImpl() {
 			@Override
 			public Monitor getInstance(String monitorName, MonitorCategory monitorCategory) {
-				  if ("test1".equals(monitorName)) {
-					  return monitor1;
-				  } else {
-					  return monitor2;
-				  }
+				if ("test1".equals(monitorName)) {
+					getMonitorMap().put(new MonitorId(monitorName, monitorCategory), monitor1);
+					return monitor1;
+				} else {
+					getMonitorMap().put(new MonitorId(monitorName, monitorCategory), monitor2);
+					return monitor2;
+				}
 			}
 		};
-		statisticsDao.saveStatistics(monitorFactory);
+
+		monitorFactory.getInstance("test1", MonitorCategory.ASYNC);
+		monitorFactory.getInstance("test2", MonitorCategory.ASYNC);
+
+		FreezeTime.timeAt("2008-09-04T10:15:56").thawAfter(new Snippet() {{
+			statisticsDao.saveStatistics(monitorFactory);
+
+			Statistics stats1 = statisticsDao
+					.loadMonitorStatistics(new MonitorId("test1", MonitorCategory.ASYNC), DateTime.now());
+			assertNotNull(stats1);
+		}});
 	}
 }
