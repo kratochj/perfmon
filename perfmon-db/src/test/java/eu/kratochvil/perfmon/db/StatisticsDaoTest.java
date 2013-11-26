@@ -43,6 +43,8 @@ public class StatisticsDaoTest {
 	public void setUp() throws Exception {
 		statisticsDao = new StatisticsDao();
 		statisticsDao.setRunner(runner);
+
+		runner.update("delete from STATISTICS");
 	}
 
 	@Test
@@ -72,8 +74,6 @@ public class StatisticsDaoTest {
 
 	@Test
 	public void testInsertMonitorStats() throws Exception {
-		runner.update("delete from STATISTICS");
-
 		FreezeTime.timeAt("2008-09-04T10:15:56").thawAfter(new Snippet() {{
 			MonitorId monitorId = new MonitorId("test", MonitorCategory.ASYNC);
 			Monitor monitor = new MonitorImpl("test", MonitorCategory.ASYNC) {
@@ -93,10 +93,59 @@ public class StatisticsDaoTest {
 			assertEquals(5, stats.getLongest());
 			assertEquals(1, stats.getShorttest());
 		}});
-
-
-
 	}
 
+	@Test
+	public void testUpdate() throws Exception {
+		runner.update(INSERT_QUERY, "test", "ASYNC", 2008, 9, 4, 10, new Timestamp(new Date()
+				.getTime()), 5, 2342523, 23455, 12);
 
+		FreezeTime.timeAt("2008-09-04T10:15:56").thawAfter(new Snippet() {{
+			MonitorId monitorId = new MonitorId("test", MonitorCategory.ASYNC);
+			Monitor monitor = new MonitorImpl("test", MonitorCategory.ASYNC) {
+				@Override
+				public MonitorStats getStatistics() {
+					return new MonitorStats(5, 15, 3, 500000, 1);
+				}
+			};
+
+			statisticsDao.updateMonitorStatistics(monitorId, monitor, DateTime.now());
+
+			Statistics stats = statisticsDao.loadMonitorStatistics(monitorId, DateTime.now());
+
+			assertNotNull(stats);
+			logger.debug("Loaded: {}", stats);
+			assertEquals(10, stats.getTotalCalls());
+			assertEquals(2342523+15, stats.getTotalTime());
+			assertEquals(500000, stats.getLongest());
+			assertEquals(1, stats.getShorttest());
+		}});
+	}
+
+	@Test
+	public void testUpdateDontAffectedLongestShortest() throws Exception {
+		runner.update(INSERT_QUERY, "test", "ASYNC", 2008, 9, 4, 10, new Timestamp(new Date()
+				.getTime()), 5, 2342523, 23455, 3);
+
+		FreezeTime.timeAt("2008-09-04T10:15:56").thawAfter(new Snippet() {{
+			MonitorId monitorId = new MonitorId("test", MonitorCategory.ASYNC);
+			Monitor monitor = new MonitorImpl("test", MonitorCategory.ASYNC) {
+				@Override
+				public MonitorStats getStatistics() {
+					return new MonitorStats(5, 15, 3, 50, 10);
+				}
+			};
+
+			statisticsDao.updateMonitorStatistics(monitorId, monitor, DateTime.now());
+
+			Statistics stats = statisticsDao.loadMonitorStatistics(monitorId, DateTime.now());
+
+			assertNotNull(stats);
+			logger.debug("Loaded: {}", stats);
+			assertEquals(10, stats.getTotalCalls());
+			assertEquals(2342523+15, stats.getTotalTime());
+			assertEquals(23455, stats.getLongest());
+			assertEquals(3, stats.getShorttest());
+		}});
+	}
 }

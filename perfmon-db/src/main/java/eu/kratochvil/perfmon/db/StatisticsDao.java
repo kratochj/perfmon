@@ -25,6 +25,11 @@ public class StatisticsDao {
 	public static final String INSERT_QUERY = "insert into STATISTICS (name, category, dt_Year, dt_Month, dt_Day, dt_Hour, " +
 			"last_Updated, total_Calls, total_Time, longest, shorttest) values (?,?,?,?,?,?,?,?,?,?,?)";
 
+	public static final String UPDATE_QUERY = "update statistics set total_calls=total_calls+?, total_time=total_time+?, " +
+			"shorttest=?, longest=?, last_Updated=? " +
+			"where name=? and category=? and dt_Year=? and dt_Month=? and dt_Day=? and dt_Hour=?";
+
+
 
 	QueryRunner runner;
 
@@ -64,6 +69,17 @@ public class StatisticsDao {
 				now.getYear(), now.getMonthOfYear(), now.getDayOfMonth(), now.getHourOfDay(), new Timestamp(now.getMillis()),
 				monitor.getStatistics().getTotalCalls(), monitor.getStatistics().getTotalTime(),
 				monitor.getStatistics().getLongest(), monitor.getStatistics().getShortest());
+	}
+
+	public void updateMonitorStatistics(MonitorId monitorId, Monitor monitor, DateTime now) throws SQLException {
+		Statistics dbStats = loadMonitorStatistics(monitorId, now);
+		assert dbStats != null;
+
+		runner.update(UPDATE_QUERY, monitor.getStatistics().getTotalCalls(), monitor.getStatistics().getTotalTime(),
+				dbStats.getShorttest()>monitor.getStatistics().getShortest()?monitor.getStatistics().getShortest():dbStats.getShorttest(),
+				dbStats.getLongest()<monitor.getStatistics().getLongest()?monitor.getStatistics().getLongest():dbStats.getLongest(),
+				new Timestamp(now.getMillis()), monitorId.getName(), monitorId.getCategory().toString(),
+				now.getYear(), now.getMonthOfYear(), now.getDayOfMonth(), now.getHourOfDay());
 	}
 
 
