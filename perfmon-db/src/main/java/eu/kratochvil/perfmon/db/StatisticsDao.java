@@ -36,16 +36,17 @@ public class StatisticsDao {
 		assert monitorFactory instanceof MonitorFactoryImpl;
 		DateTime now = DateTime.now();
 
-
 		for (Map.Entry<MonitorId, Monitor> entry : MonitorAccessor.getMonitors((MonitorFactoryImpl) monitorFactory)
 		                                                          .entrySet()) {
 			Statistics dbStatistics = loadMonitorStatistics(entry.getKey(), now);
 			if (dbStatistics != null) {
 				logger.debug("Updating monitor: {}", dbStatistics);
 				updateMonitorStatistics(entry.getKey(), entry.getValue(), now);
+				entry.getValue().reset();
 			} else {
 				logger.debug("Creating new db record for monitor: {}", entry.getKey());
 				createMonitorStatistics(entry.getKey(), entry.getValue(), now);
+				entry.getValue().reset();
 			}
 		}
 
@@ -73,14 +74,26 @@ public class StatisticsDao {
 		Statistics dbStats = loadMonitorStatistics(monitorId, now);
 		assert dbStats != null;
 
-		runner.update(UPDATE_QUERY, monitor.getStatistics().getTotalCalls(), monitor.getStatistics().getTotalTime(),
-				dbStats.getShorttest()>monitor.getStatistics().getShortest()?monitor.getStatistics().getShortest():dbStats.getShorttest(),
-				dbStats.getLongest()<monitor.getStatistics().getLongest()?monitor.getStatistics().getLongest():dbStats.getLongest(),
+		runner.update(UPDATE_QUERY, monitor.getStatistics().getTotalCalls(), monitor.getStatistics().getTotalTime(), getShortest(monitor, dbStats), getLongest(monitor, dbStats),
 				new Timestamp(now.getMillis()), monitorId.getName(), monitorId.getCategory().toString(),
 				now.getYear(), now.getMonthOfYear(), now.getDayOfMonth(), now.getHourOfDay());
 	}
 
+	private Long getLongest(Monitor monitor, Statistics dbStats) {
+		if (monitor.getStatistics().getTotalCalls()==0) {
+			return null;
+		}
 
+		return dbStats.getLongest()<monitor.getStatistics().getLongest()?monitor.getStatistics().getLongest():dbStats.getLongest();
+	}
+
+	private Long getShortest(Monitor monitor, Statistics dbStats) {
+		if (monitor.getStatistics().getTotalCalls()==0) {
+			return null;
+		}
+
+		return dbStats.getShorttest()>monitor.getStatistics().getShortest()?monitor.getStatistics().getShortest():dbStats.getShorttest();
+	}
 
 
 	public void setRunner(QueryRunner runner) {
