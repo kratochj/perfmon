@@ -60,14 +60,33 @@
 
 
 	<build>
+		<testResources>
+			<testResource>
+				<directory>src/test/resources</directory>
+				<filtering>true</filtering>
+			</testResource>
+		</testResources>
+		<resources>
+			<resource>
+				<directory>src/main/resources</directory>
+				<filtering>true</filtering>
+			</resource>
+		</resources>
 		<plugins>
 			<plugin>
 				<executions>
 					<execution>
-						<phase>generate-test-resources</phase>
+						<id>compile</id>
+						<phase>compile</phase>
 						<goals>
-							<goal>init</goal>
 							<goal>migrate</goal>
+						</goals>
+					</execution>
+					<execution>
+						<id>clean</id>
+						<phase>clean</phase>
+						<goals>
+							<goal>clean</goal>
 						</goals>
 					</execution>
 				</executions>
@@ -75,7 +94,8 @@
 				<artifactId>flyway-maven-plugin</artifactId>
 				<version>2.2.1</version>
 				<configuration>
-					<url>jdbc:h2:target/testdb;MODE=Oracle</url>
+					<url>jdbc:h2:${project.build.directory}/testdb;MODE=Oracle</url>
+					<!--<url>jdbc:h2:${project.parent.basedir}/target/testdb;MODE=Oracle</url>-->
 					<user>sa</user>
 				</configuration>
 				<dependencies>
