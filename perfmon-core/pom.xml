@@ -7,12 +7,12 @@
 
 
     <artifactId>perfmon-core</artifactId>
-    <version>0.1</version>
+    <version>0.2-SNAPSHOT</version>
 
 	<parent>
 		<groupId>eu.kratochvil.perfmon</groupId>
 		<artifactId>perfmon-parent</artifactId>
-		<version>0.1</version>
+		<version>0.2-SNAPSHOT</version>
 		<relativePath>../perfmon-parent</relativePath>
 	</parent>
 

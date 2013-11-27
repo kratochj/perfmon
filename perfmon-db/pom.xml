@@ -7,7 +7,7 @@
 	<parent>
 		<artifactId>perfmon-parent</artifactId>
 		<groupId>eu.kratochvil.perfmon</groupId>
-		<version>0.1</version>
+		<version>0.2-SNAPSHOT</version>
 		<relativePath>../perfmon-parent</relativePath>
 	</parent>
 
@@ -15,7 +15,7 @@
 		<dependency>
 			<groupId>eu.kratochvil.perfmon</groupId>
 			<artifactId>perfmon-core</artifactId>
-			<version>0.1</version>
+			<version>0.2-SNAPSHOT</version>
 		</dependency>
 		<dependency>
 			<groupId>commons-lang</groupId>
