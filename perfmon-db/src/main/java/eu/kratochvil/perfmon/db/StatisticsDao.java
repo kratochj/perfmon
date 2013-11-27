@@ -5,7 +5,6 @@ import java.sql.Timestamp;
 import java.util.Map;
 
 import eu.kratochvil.perfmon.Monitor;
-import eu.kratochvil.perfmon.MonitorAccessor;
 import eu.kratochvil.perfmon.MonitorFactory;
 import eu.kratochvil.perfmon.MonitorFactoryImpl;
 import eu.kratochvil.perfmon.MonitorId;
@@ -36,8 +35,7 @@ public class StatisticsDao {
 		assert monitorFactory instanceof MonitorFactoryImpl;
 		DateTime now = DateTime.now();
 
-		for (Map.Entry<MonitorId, Monitor> entry : MonitorAccessor.getMonitors((MonitorFactoryImpl) monitorFactory)
-		                                                          .entrySet()) {
+		for (Map.Entry<MonitorId, Monitor> entry : ((MonitorFactoryImpl) monitorFactory).getMonitorMap().entrySet()) {
 			Statistics dbStatistics = loadMonitorStatistics(entry.getKey(), now);
 			if (dbStatistics != null) {
 				logger.debug("Updating monitor: {}", dbStatistics);
