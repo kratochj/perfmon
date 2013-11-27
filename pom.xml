@@ -2,10 +2,16 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
-	<groupId>eu.kratochvil.perfmon</groupId>
 	<artifactId>perfmon-reactor</artifactId>
 	<version>0.1-SNAPSHOT</version>
 	<packaging>pom</packaging>
+
+	<parent>
+		<groupId>eu.kratochvil.perfmon</groupId>
+		<artifactId>perfmon-parent</artifactId>
+		<version>0.1-SNAPSHOT</version>
+		<relativePath>perfmon-parent</relativePath>
+	</parent>
 
 	<name>PerfMon - reactor</name>
 	<description>Performance monitor for Java - reactor</description>
