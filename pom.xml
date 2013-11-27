@@ -13,6 +13,12 @@
 		<relativePath>perfmon-parent</relativePath>
 	</parent>
 
+	<scm>
+		<connection>git@github.com:kratochj/perfmon.git</connection>
+		<url>https://github.com/kratochj/perfmon.git</url>
+		<developerConnection>scm:git:git@github.com:kratochj/perfmon.git</developerConnection>
+	</scm>
+
 	<name>PerfMon - reactor</name>
 	<description>Performance monitor for Java - reactor</description>
 	<url>http://jiri.kratochvil.eu</url>
