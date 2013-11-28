@@ -1,18 +1,8 @@
 package eu.kratochvil.perfmon.db;
 
-import java.sql.Timestamp;
-import java.util.Date;
-
-import eu.kratochvil.perfmon.Monitor;
-import eu.kratochvil.perfmon.MonitorCategory;
-import eu.kratochvil.perfmon.MonitorFactory;
-import eu.kratochvil.perfmon.MonitorFactoryImpl;
-import eu.kratochvil.perfmon.MonitorId;
-import eu.kratochvil.perfmon.MonitorImpl;
-import eu.kratochvil.perfmon.MonitorStats;
+import eu.kratochvil.perfmon.*;
 import eu.kratochvil.util.FreezeTime;
 import eu.kratochvil.util.Snippet;
-import org.apache.commons.dbutils.QueryRunner;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.joda.time.DateTime;
@@ -20,8 +10,12 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+
+import java.sql.Timestamp;
+import java.util.Date;
 
 import static org.junit.Assert.*;
 
@@ -37,21 +31,21 @@ public class StatisticsDaoTest {
 	public static final Logger logger = LogManager.getLogger(StatisticsDaoTest.class);
 
 	@Autowired
-	QueryRunner runner;
+    JdbcTemplate jdbcTemplate;
 
 	StatisticsDao statisticsDao;
 
 	@Before
 	public void setUp() throws Exception {
 		statisticsDao = new StatisticsDao();
-		statisticsDao.setRunner(runner);
+		statisticsDao.setJdbcTemplate(jdbcTemplate);
 
-		runner.update("delete from STATISTICS");
+        jdbcTemplate.update("delete from STATISTICS");
 	}
 
 	@Test
 	public void testLoadMonitorStatsEmpty() throws Exception {
-		runner.update("delete from STATISTICS");
+        jdbcTemplate.update("delete from STATISTICS");
 
 		MonitorId monitorId = new MonitorId("test", MonitorCategory.ASYNC);
 		assertNull(statisticsDao.loadMonitorStatistics(monitorId, DateTime.now()));
@@ -59,7 +53,7 @@ public class StatisticsDaoTest {
 
 	@Test
 	public void testLoadMonitorStats() throws Exception {
-		runner.update(INSERT_QUERY, "test", "ASYNC", 2008, 9, 4, 10, new Timestamp(new Date()
+        jdbcTemplate.update(INSERT_QUERY, "test", "ASYNC", 2008, 9, 4, 10, new Timestamp(new Date()
 				.getTime()), 5, 2342523, 23455, 12);
 
 		FreezeTime.timeAt("2008-09-04T10:15:56").thawAfter(new Snippet() {{
@@ -99,7 +93,7 @@ public class StatisticsDaoTest {
 
 	@Test
 	public void testUpdate() throws Exception {
-		runner.update(INSERT_QUERY, "test", "ASYNC", 2008, 9, 4, 10, new Timestamp(new Date()
+        jdbcTemplate.update(INSERT_QUERY, "test", "ASYNC", 2008, 9, 4, 10, new Timestamp(new Date()
 				.getTime()), 5, 2342523, 23455, 12);
 
 		FreezeTime.timeAt("2008-09-04T10:15:56").thawAfter(new Snippet() {{
@@ -126,7 +120,7 @@ public class StatisticsDaoTest {
 
 	@Test
 	public void testUpdateDontAffectedLongestShortest() throws Exception {
-		runner.update(INSERT_QUERY, "test", "ASYNC", 2008, 9, 4, 10, new Timestamp(new Date()
+        jdbcTemplate.update(INSERT_QUERY, "test", "ASYNC", 2008, 9, 4, 10, new Timestamp(new Date()
 				.getTime()), 5, 2342523, 23455, 3);
 
 		FreezeTime.timeAt("2008-09-04T10:15:56").thawAfter(new Snippet() {{
@@ -153,7 +147,7 @@ public class StatisticsDaoTest {
 
 	@Test
 	public void testSaveStatistics() throws Exception {
-		runner.update(INSERT_QUERY, "test", "ASYNC", 2008, 9, 4, 10, new Timestamp(new Date()
+        jdbcTemplate.update(INSERT_QUERY, "test", "ASYNC", 2008, 9, 4, 10, new Timestamp(new Date()
 				.getTime()), 5, 2342523, 23455, 3);
 
 		final Monitor monitor1 = new MonitorImpl("test1", MonitorCategory.ASYNC) {

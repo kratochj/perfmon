@@ -3,7 +3,7 @@
 
     <groupId>eu.kratochvil.perfmon</groupId>
     <artifactId>perfmon-parent</artifactId>
-    <version>0.2-SNAPSHOT</version>
+    <version>0.3-SNAPSHOT</version>
     <packaging>pom</packaging>
 
 	<name>PerfMon - parent pom</name>
@@ -92,18 +92,17 @@
 		        <artifactId>commons-dbcp</artifactId>
 		        <version>1.4</version>
 	        </dependency>
-	        <dependency>
-		        <groupId>commons-dbutils</groupId>
-		        <artifactId>commons-dbutils</artifactId>
-		        <version>1.5</version>
-	        </dependency>
-
 
 
 	        <!-- Spring -->
             <dependency>
                 <groupId>org.springframework</groupId>
                 <artifactId>spring-core</artifactId>
+                <version>${version.spring}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework</groupId>
+                <artifactId>spring-jdbc</artifactId>
                 <version>${version.spring}</version>
             </dependency>
 	        <dependency>
