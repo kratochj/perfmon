@@ -28,6 +28,6 @@ public class TestDbConnection {
 	public void testSelectEmpty() throws Exception {
 		List<Statistics> stats = jdbcTemplate.query("select * from STATISTICS where rownum <= 1", new StatisticsMapper());
 		assertNotNull(stats);
-        assertEquals(stats.size(), 0);
+        assertEquals(stats.size(), 1);
 	}
 }
