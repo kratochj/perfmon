@@ -9,6 +9,7 @@ Maven support
 
 Perfmon is fully Maven 3.x compliant. Artifacts for Maven users are hosted on Maven Central. Dependecies go as follows:
 
+```xml
   <dependency>
         <groupId>eu.kratochvil.perfmon</groupId>
         <artifactId>perfmon-core</artifactId>
@@ -26,3 +27,4 @@ Perfmon is fully Maven 3.x compliant. Artifacts for Maven users are hosted on Ma
         <artifactId>perfmon-jmx</artifactId>
         <version>0.1</version>
   </dependency>
+```
