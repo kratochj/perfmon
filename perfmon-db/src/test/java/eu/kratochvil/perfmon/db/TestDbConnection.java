@@ -1,6 +1,5 @@
-package eu.kratochj.perfmon.db;
+package eu.kratochvil.perfmon.db;
 
-import eu.kratochvil.perfmon.db.Statistics;
 import eu.kratochvil.perfmon.db.utils.StatisticsMapper;
 import org.junit.Test;
 import org.junit.runner.RunWith;
