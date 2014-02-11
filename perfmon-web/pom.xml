@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <artifactId>perfmon-parent</artifactId>
+        <groupId>eu.kratochvil.perfmon</groupId>
+        <version>0.3-SNAPSHOT</version>
+        <relativePath>../perfmon-parent</relativePath>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+
+    <artifactId>perfmon-web</artifactId>
+    <packaging>war</packaging>
+
+    <dependencies>
+        <dependency>
+            <groupId>com.efsavage.twitter.bootstrap</groupId>
+            <artifactId>bootstrap-maven</artifactId>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.mortbay.jetty</groupId>
+                <artifactId>maven-jetty-plugin</artifactId>
+                <version>6.1.10</version>
+            </plugin>
+        </plugins>
+    </build>
+
+
+</project>

@@ -28,5 +28,6 @@
 		<module>perfmon-parent</module>
 		<module>perfmon-jmx</module>
 		<module>perfmon-db</module>
-	</modules>
+        <module>perfmon-web</module>
+    </modules>
 </project>
