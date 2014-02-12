@@ -14,10 +14,48 @@
     <packaging>war</packaging>
 
     <dependencies>
+        <!-- perfmon -->
+        <dependency>
+            <groupId>eu.kratochvil.perfmon</groupId>
+            <artifactId>perfmon-core</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>eu.kratochvil.perfmon</groupId>
+            <artifactId>perfmon-jmx</artifactId>
+        </dependency>
+
+        <!-- spring -->
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-context</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-beans</artifactId>
+        </dependency>
+
+
         <dependency>
             <groupId>com.efsavage.twitter.bootstrap</groupId>
             <artifactId>bootstrap-maven</artifactId>
         </dependency>
+        <dependency>
+            <groupId>org.jboss.resteasy</groupId>
+            <artifactId>resteasy-jackson-provider</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.jboss.resteasy</groupId>
+            <artifactId>resteasy-jaxrs-all</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.jboss.resteasy</groupId>
+            <artifactId>resteasy-spring</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>javax.inject</groupId>
+            <artifactId>javax.inject</artifactId>
+        </dependency>
+
     </dependencies>
 
     <build>
