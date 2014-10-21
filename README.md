@@ -1,3 +1,5 @@
+[ ![Codeship Status for kratochj/perfmon](https://codeship.io/projects/0e687a50-3b2b-0132-4528-725ed1c46ce5/status)](https://codeship.io/projects/42552)
+
 Performance monitor for Java
 ============================
 
